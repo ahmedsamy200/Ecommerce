@@ -1,0 +1,11 @@
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\bin\Debug\DataModel.dll.config
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\bin\Debug\DataModel.dll
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\bin\Debug\DataModel.pdb
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\bin\Debug\EntityFramework.dll
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\bin\Debug\EntityFramework.xml
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\obj\Debug\DataModel.csprojResolveAssemblyReference.cache
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\obj\Debug\DataModel.csproj.CoreCompileInputs.cache
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\obj\Debug\DataModel.dll
+C:\Users\DELL\source\repos\E-Ecommerce\DataModel\obj\Debug\DataModel.pdb

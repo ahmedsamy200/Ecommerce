@@ -1,0 +1,530 @@
+﻿@{
+    ViewBag.Title = "المتجر";
+    if (Session["UserID"] != null)
+    {
+        Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    }
+    else if (Session["UserID"] == null)
+    {
+        Layout = "~/Views/Shared/_MyLayout.cshtml";
+    }
+}
+
+<head>
+    <link href="~/assets/css/Products.css" rel="stylesheet" />
+</head>
+
+
+<section class="prods-section" style="margin-top:118px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 mb-4 filter-aside " style="transition: all .3s;">
+                <div class="filterBox">
+                    <div class="col-12 d-md-none" style="border-bottom: 1px solid #3333;padding:0">
+                        <div class="col-12 row d-flex justify-content-betweem px-0" style="padding-top: 22px;padding-bottom: 14px;">
+                            <div class="col px-1 font-1" style="line-height:2">
+                                <a href="#" onclick="$('.filter-aside').toggleClass('outside');" style="color: #41b54f !important;font-size:19px">
+                                    <span class="fas fa-chevron-right pl-1" style="font-size: 18px;"></span>
+                                    <span style="position: relative;top: -2px">عودة</span>
+                                </a>
+                            </div>
+                            <div class="col text-left px-1 pt-1 font-1" style="padding-left: 0px !important;">
+                                <a href="#" style="color: #41b54f !important;font-size:19px" onclick="$('.filter-aside').toggleClass('outside');">
+                                    نتائج البحث
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                   
+
+                    <div class="categoryFilter-section" style="    padding: 20px 0px;">
+                        <h3>التصنيفات</h3>  
+                        <div class="all-categories">
+                            <ul class="my-category">
+                               <li class="all-categories-list__item">
+                                    <a href="#" onclick="LoadAllPeoducts()">
+                                        <input type="checkbox"  class="ab-checkbox" id="all" checked>
+                                        <label for="all">الكل</label>
+                                    </a>
+
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="priceFilter-section" style="position:relative;margin-top: 30px;margin-bottom: 30px;">
+                       
+                        <h3>حسب السعر</h3>
+                        <p>
+                            <label for="amount" class="amount">السعر :
+                            <span class="range-price"><span class="MaxPrice"></span> <span>جنيه</span> - <span class="MinPrice"></span> <span>جنيه</span></span>
+                            
+                            </label>
+                            <input class="min" type="hidden" value="0">
+                            <input class="max" type="hidden" value="10000">
+                            <input class="categoryID" type="hidden" value="0"/>
+                            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;display:none">
+                        </p>
+
+                        <div id="slider-range"></div>
+                        <button class="btn btn-success btn-priceFilter" onclick="loadFilteredProducts(1) ,$('.filter-aside').toggleClass('outside');">بحث</button>
+                    </div>
+
+                    <hr />
+                    <div class="starFilter-section" style="margin-bottom: 30px;">
+                        <h3 style="margin-bottom:14px;margin-top:10px">حسب التقييم</h3>
+                        <div class="stars">
+                            <a class="ss" href="javascript:void(0)" onclick="filterByRating(1) ,$('.filter-aside').toggleClass('outside');">
+                                <div class="stars-outer"> <div class="stars-inner" style="width: 20%"></div> </div>
+                                <span class="OrUp">او اعلي</span>
+                            </a>
+                            <a class="ss" href="javascript:void(0)" onclick="filterByRating(2) ,$('.filter-aside').toggleClass('outside');">
+                                <div class="stars-outer"> <div class="stars-inner" style="width: 38%"></div> </div>
+                                <span class="OrUp">او اعلي</span>
+                            </a>
+                            <a class="ss" href="javascript:void(0)" onclick="filterByRating(3) ,$('.filter-aside').toggleClass('outside');">
+                                <div class="stars-outer"> <div class="stars-inner" style="width: 58%"></div> </div>
+                                <span class="OrUp">او اعلي</span>
+                            </a>
+                            <a class="ss" href="javascript:void(0)" onclick="filterByRating(4) ,$('.filter-aside').toggleClass('outside');">
+                                <div class="stars-outer"> <div class="stars-inner" style="width: 78%"></div> </div>
+                                <span class="OrUp">او اعلي</span>
+                            </a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="followUs-section">
+                        <hr />
+                        <h3>تابعنا علي</h3>
+                        <div class="social-media">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-pinterest"></i></a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="col-md-9 myprods">
+                <div class="product-Box">
+                    <h3 style="height: 50px;color: #606973;font-weight: 600;">المنتجات</h3>
+                    <div id="loader" style="text-align:center">
+                        <img src="~/Images/loader.gif" />
+
+                    </div>
+                    <div class="AllProducts">
+                        <div class="row">
+                            
+                        </div>
+                        <div id="paged">
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="QuickViewModal">
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document" style="margin-top: 40px;">
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding-bottom: 7px;">
+                            <h4 class="modal-title" style="font-weight: 700;color: #949698;"></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <input type="hidden" class="hdnProdID" />
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <img class="card-img-top card-img img-fluid prodImg" style="height:100%;padding-bottom:15px" alt="...">
+                                </div>
+                                <div class="col-md-6">
+                                    <h2 class="productName"></h2>
+                                    <p class="productCategory" style="line-height: 1;margin-bottom:13px;margin-top: 13px;"></p>
+                                    <div class="stars-outer">
+                                        <div class="stars-inner"></div>
+
+                                    </div>
+                                    <span class="px-2" style="color: #333333bf;">(<a href="#" class="ReviewCounter"></a>)</span>
+                                    <h1 class="my-3 price" style="color: #6e1c23;font-weight: 700;font-size: 24px;"></h1>
+                                    <p class="productDescription">
+                                    </p>
+                                    <input class="form-control txtQuantity" type="number" step="1" value="1" style="margin-top: 40px;" />
+                                    <span class="invalidQuantity" style="color:red"> يجب اظافه عنصر واحد علي الاقل</span>
+                                    <button class="btn btn-primary form-control my-3 QV-btn-addCard">
+                                        <i class="fas fa-shopping-cart pl-2" style="font-size:14px"></i>
+                                        <span style="font-size:14px">اضافه الي السلة</span>
+
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="fixed-filter " class="rounded-circle bg-light  row justify-content-center align-items-center d-md-none" style="position: fixed;bottom:20px;left:35px; width:45px;height:45px;z-index:99999;background-color: #41b54f !important;">
+            <a class="position-relative" href="javascript:void(0)" onclick="$('.filter-aside').toggleClass('outside');" style="color:#fff">
+                <i class="fas fa-filter text-green" style="font-size:20px;line-height:2"></i>
+            </a>
+        </div>
+        <input type="hidden" class="rating" value="0"/>
+    </div>
+</section>
+ 
+<script>
+    $(document).ready(function () {
+        if ($(window).width() < 768) {
+            $('.filter-aside').addClass('outside');
+        }
+        LoadAllCategories();
+        loadFilteredProducts(1);
+        $('.no-products').hide();     
+        $('.QV-btn-addCard').click(function () {
+            var quantity = $('.txtQuantity').val();
+            if (quantity < 1) {
+                $('.invalidQuantity').show();
+                return false;
+            }
+            var prodID = $('.hdnProdID').val();
+            AddToCart(prodID, quantity);
+        })
+
+
+    })
+
+
+    $(function () {
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 99999,
+            values: [0, 99999],
+            slide: function (event, ui) {
+                //$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                $(".min").val(ui.values[0]);
+                $(".max").val(ui.values[1]);
+                $(".MaxPrice").text(ui.values[0]);
+                $(".MinPrice").text(ui.values[1]);
+            }
+        });
+        $(".MaxPrice").text($("#slider-range").slider("values", 0));
+        $(".MinPrice").text($("#slider-range").slider("values", 1));
+
+
+    });
+
+    function LoadAllPeoducts() {
+        $(".categoryID").val(0);
+        $.ajax({
+            url: "/Product/GetAllProducts",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            beforeSend: function () {
+                $('.prods').hide();
+                $('#loader').show();
+                $('.no-products').hide();
+            },
+            success: function (result) {
+                var defultImg = "default.png";
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += ' <div class="col-lg-4 col-md-6 col-sm-6 prods" data-aos="fade-up" data-aos-duration="800">';
+                    html += ' <div class="card" style="width: 18rem;">';
+                    html += '  <a href="/Shop/Product?id=' + item.productID + '">';
+                    if (item.img == null) {
+                        html += '<img class="card-img-top card-img img-fluid" src="/Images/Products/' + defultImg + '" />';
+                    } else
+                        html += '<img class="card-img-top card-img img-fluid" src="/Images/Products/' + item.img + '" />';
+                    html += '</a>';
+                    html += '<div class="card-body">';
+                    html += '<h5 class="card-title " style="font-size:26px">' + item.prodName + '</h5>';
+                    html += ' <p class="small text-muted text-uppercase mb-2">' + item.CategoryName + '</p>';
+                    html += '<div class="stars-outer">';
+                    html += ' <div class="stars-inner" style="width: ' + item.totalStars + '%"></div>';
+                    html += ' </div>';
+                    html += ' <hr />';
+                    html += '<h6 class="mb-3" style="padding: 11px 21px 10px 21px;">';
+                    if (item.discount > 0) {
+                        html += '<div class="Product-bage">';
+                        html += '<span>- ' + item.discount + '%</span>';
+                        html += '</div>';
+                        html += '<span class="text-grey old-price" style="color: #8f91a8;"><s>' + item.price + '  جنيه </s></span>';
+                        html += '<span class="text-danger mr-1 new-price" style="font-size:19px;font-weight: 900;">' + (item.price - (item.discount / 100 * item.price)) + '  جنيه   </span>';
+                    } else {
+                        html += '<span class="text-danger mr-1 new-price" style="font-size:19px;font-weight: 900;">' + item.price + ' جنيه </span>';
+                    }
+                    html += ' </h6>';
+                    html += '<div class="row">';
+
+                    html += '<button  onclick=QuickView(' + item.productID + '); type="button" data-toggle="modal" data-target=".bd-example-modal-lg" class="col-2 col-sm-3 col-lg-2  btn btn-light mb-2 btn-view my-btn" style="margin-left:7px">';
+                    html += ' <i class="fas fa-search"></i>';
+                    html += '</button>';
+                    html += '<button type="button"  onclick=AddToCart(' + item.productID + ',' + 1 + '); class="col-sm-8 col-lg-9  btn btn-primary mb-2 btn-addCard test-add my-btn">';
+                    html += '<i class="fas fa-shopping-cart pl-2" style="font-size:14px"></i> <span style="font-size:14px"> اضافه الي العربة</span>';
+                    html += '</button>';
+
+                    html += '<button  onclick=AddToFavorate(' + item.productID + '); type="button" class="btn btn-danger  mb-2 btn-love test-love addToFavorate">';
+                    html += '<i class="far fa-heart heart' + item.productID + '" style="padding-left:0"></i>';
+                    html += '</button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                });
+                $('.AllProducts .row').html(html);
+                $('.no-products').hide();
+                $('#loader').hide();
+                CheakFavorate();
+
+            }
+        });
+    }
+
+    function LoadAllCategories() {
+
+        $.ajax({
+            url: "/Shop/LoadAllCategories",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<li class="all-categories-list__item">';
+                    html += '<a href="javascript:void(0);" onclick="filterByCategory(' + item.categoryID + ');" return false;>';
+                    html += '<input type="checkbox" class="ab-checkbox" id="' + item.categoryName + '" >';
+                    html += '<label for="' + item.categoryName + '">' + item.categoryName + '</label>';
+                    html += '</a>';
+                    html += '</li>';
+
+                });
+                $('.my-category').append(html);
+
+            }
+        });
+    }
+
+    function QuickView(id) {
+        $('.txtQuantity').val(1);
+        $('.invalidQuantity').hide();
+        $.ajax({
+            url: "/Product/GetProductByID?id=" + id,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var defultImg = "default.png";
+                var html = '';
+                $.each(result, function (key, item) {
+                    $('.modal-title').text(result.prodName);
+                    $(".prodImg").attr("src", '/Images/Products/' + result.img);
+                    $('.productName').text(result.prodName);
+                    $('.productCategory').text(result.CategoryName);
+                    $('.ReviewCounter').text(result.numberOfReviews);
+                    $('.modal-body .stars-inner').css("width", result.totalStars + "%");
+                    $('.price').text(result.price - (result.discount / 100 * result.price));
+                    $('.productDescription').text(result.prodDescription);
+                    $('.hdnProdID').val(result.productID);
+                });
+            }
+        });
+
+    }
+
+    function PaggingTemplate(totalPage, currentPage) {
+        //debugger;
+        if ($('#paged').children().length == 0) {
+
+            var template = "";
+            var TotalPages = totalPage;
+            var CurrentPage = currentPage;
+            var PageNumberArray = Array();
+
+
+            var countIncr = 0;
+            for (var i = 0; i < totalPage; i++) {
+                PageNumberArray[countIncr] = i + 1;
+                //if (totalPage != currentPage && PageNumberArray[countIncr - 1] != totalPage) {
+                //    PageNumberArray[countIncr] = i + 1;
+                //}
+                countIncr++;
+            };
+            PageNumberArray = PageNumberArray.slice(0, 99);
+            var FirstPage = 1;
+            var LastPage = totalPage;
+            if (totalPage != currentPage) {
+                var ForwardOne = currentPage + 1;
+            }
+            var BackwardOne = 1;
+            if (currentPage > 1) {
+                BackwardOne = currentPage - 1;
+            }
+
+            template = "<p class='page-Number'>" + CurrentPage + " من " + TotalPages + " صفحات</p>"
+            template += '<ul class="mypagination">';
+            if (FirstPage == currentPage) {
+                template += '<li class="prev"><a href="javascript:void(0)" style="cursor: not-allowed;">&nbsp;<i class="far fa-angle-double-right"></i></a></li>';
+
+            } else {
+                template += '<li class="prev"><a href="#" class="allow" onclick="loadFilteredProducts(' + BackwardOne + ')">&nbsp;<i class="far fa-angle-double-right"></i></a></li>';
+
+            }
+
+            var numberingLoop = "";
+            for (var i = 0; i < PageNumberArray.length; i++) {
+                if (i == CurrentPage - 1)
+                    numberingLoop = numberingLoop + '<li class="pageNumber active"><a onclick="loadFilteredProducts(' + PageNumberArray[i] + ')" href="#">' + PageNumberArray[i] + '</a></li>'
+                else
+                    numberingLoop = numberingLoop + '<li class="pageNumber"><a onclick="loadFilteredProducts(' + PageNumberArray[i] + ')" href="#">' + PageNumberArray[i] + '</a></li>'
+
+            }
+            template = template + numberingLoop + '</i></a></li>';
+            if (totalPage == currentPage) {
+                template += '<li class="next"><a href="javascript:void(0)" style="cursor: not-allowed;">&nbsp;&nbsp;<i class="far fa-angle-double-left"></i></a></li></ul>';
+
+            } else {
+                template += '<li class="next"><a href="#" class="allow" onclick="loadFilteredProducts(' + ForwardOne + ')">&nbsp;&nbsp;<i class="far fa-angle-double-left"></i></a></li></ul>';
+
+            }
+            $("#paged").append(template);
+        }
+   
+
+    }
+
+    function loadFilteredProducts(pageNum, pageSize)
+    {
+        $("#paged").empty();
+        var catID = $('.categoryID').val();
+        var minPrice = $(".min").val();
+        var maxPrice = $(".max").val();
+        var rating = $(".rating").val();
+        $.ajax({
+            url: "/Product/loadFilteredProducts?CategoryID=" + catID +
+            "&minPrice=" + minPrice +
+            "&maxPrice=" + maxPrice +
+            "&rate=" + rating +
+            "&pageNumber=" + pageNum +
+            "&pageSize=" + 6,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            beforeSend: function () {
+                $('.prods').hide();
+                $('#loader').show();
+                $('.no-products').hide();
+            },
+            success: function (result) {
+                var defultImg = "default.png";
+                var html = '';
+                if (result.Data.length == 0) {
+
+                    html += '<div class="no-products">';
+                    html += '<img src="/Images/img/noprods.svg" />';
+                    html += '<p style="font-size: 20px;">لا يوجد منتجات في هذا القسم حتي الان</p>';
+                    html += '</div>';
+                    $('.AllProducts .row').html(html);
+                    $('.no-products').show();
+                    $('#loader').hide();
+                }
+                else {
+                    var i = 0
+                    $.each(result.Data, function (key, item) {
+                        if (i < result.Data.length) {
+                            html += ' <div class="col-lg-4 col-md-6 col-sm-6 prods">';
+                            html += ' <div class="card" style="width: 18rem;">';
+                            html += '  <a href="/Shop/Product?id=' + result.Data[i].productID + '">';
+                            if (result.Data[i].img == null) {
+                                html += '<img class="card-img-top card-img img-fluid" src="/Images/Products/' + defultImg + '" />';
+                            } else
+                                html += '<img class="card-img-top card-img img-fluid" src="/Images/Products/' + result.Data[i].img + '" />';
+                            html += '</a>';
+                            html += '<div class="card-body">';
+                            html += '<h5 class="card-title " style="font-size:26px">' + result.Data[i].prodName + '</h5>';
+                            html += ' <p class="small text-muted text-uppercase mb-2">' + result.Data[i].CategoryName + '</p>';
+                            html += '<div class="stars-outer">';
+                            html += ' <div class="stars-inner" style="width: ' + result.Data[i].totalStars + '%"></div>';
+                            html += ' </div>';
+                            html += ' <hr />';
+                            html += '<h6 class="mb-3" style="padding: 11px 21px 10px 21px;">';
+                            if (result.Data[i].discount > 0) {
+                                html += '<div class="Product-bage">';
+                                html += '<span>- ' + result.Data[i].discount + '%</span>';
+                                html += '</div>';
+                                html += '<span class="text-grey old-price" style="color: #8f91a8;"><s>' + result.Data[i].price + '  جنيه </s></span>';
+                                html += '<span class="text-danger mr-1 new-price" style="font-size:19px;font-weight: 900;">' + (result.Data[i].price - (result.Data[i].discount / 100 * result.Data[i].price)) + '  جنيه   </span>';
+                            } else {
+                                html += '<span class="text-danger mr-1 new-price" style="font-size:19px;font-weight: 900;">' + result.Data[i].price + ' جنيه </span>';
+                            }
+                            html += ' </h6>';
+                            html += '<div class="row">';
+
+                            html += '<button  onclick=QuickView(' + result.Data[i].productID + '); type="button" data-toggle="modal" data-target=".bd-example-modal-lg" class="col-2 col-sm-3 col-lg-2  btn btn-light mb-2 btn-view my-btn" style="margin-left:7px">';
+                            html += ' <i class="fas fa-search"></i>';
+                            html += '</button>';
+                            html += '<button type="button"  onclick=AddToCart(' + result.Data[i].productID + ',' + 1 + '); class="col-sm-8 col-lg-9  btn btn-primary mb-2 btn-addCard test-add my-btn">';
+                            html += '<i class="fas fa-shopping-cart pl-2" style="font-size:14px"></i> <span style="font-size:14px"> اضافه الي العربة</span>';
+                            html += '</button>';
+
+                            html += '<button  onclick=AddToFavorate(' + result.Data[i].productID + '); type="button" class="btn btn-danger  mb-2 btn-love test-love addToFavorate">';
+                            html += '<i class="far fa-heart heart' + result.Data[i].productID + '" style="padding-left:0"></i>';
+                            html += '</button>';
+                            html += '</div>';
+                            html += '</div>';
+                            html += '</div>';
+                            html += '</div>';
+                            i++;
+                        }
+                    });
+                    $('.AllProducts .row').html(html);
+                    CheakFavorate();
+                    $('.no-products').hide();
+                    $('#loader').hide();
+                    PaggingTemplate(result.TotalPages, result.CurrentPage);
+
+                }
+
+            }
+        });
+    }
+
+    function filterByRating(rating) {
+        $(".rating").val(rating);
+
+        $('.ss').click(function () {
+            $(this).addClass("selectstar");
+            $('.ss').not(this).removeClass('selectstar');
+        })
+        
+        loadFilteredProducts(1);
+    }
+
+    function filterByCategory(categoryID) {
+        $(".categoryID").val(categoryID);
+        $('input[type="checkbox"]').on('change', function () {
+            $('input[type="checkbox"]').not(this).prop('checked', false);
+        });
+        loadFilteredProducts(1);
+    }
+
+</script>

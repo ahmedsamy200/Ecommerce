@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "طلباتي";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<link href="~/assets/css/orders.css" rel="stylesheet" />
+<section class="orders-section" >
+    <div class="container">
+        <div class="content">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col"> رقم الاوردر</th>
+                        <th scope="col">العنوان</th>
+                        <th scope="col">السعر</th>
+                        <th scope="col">الحالة</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody class="tbody">
+                  
+                </tbody>
+            </table>
+        </div>
+       
+    </div>
+
+</section>
+
+<script>
+    $(document).ready(function () {
+        GetUserOreders();
+        
+    });
+
+    function GetUserOreders() {       
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/Orders/GetUserOreders",
+            success: function (result) {           
+                var html = '';
+                var i = 1;
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + i + '</td>';
+                    html += '<td >' + item.orderID + '</td>';
+                    html += '<td >' + item.shippingAddress + '</td>';
+                    html += '<td >' + item.totalPrice + ' جنية' + '</td>';
+                    if (item.IsDelivered)
+                    {
+                        html += '<td >' + 'تم التوصيل' + '</td>';
+                    }
+                    else if (item.status == null) 
+                    {
+                        html += '<td >' + 'قيد الانتظار' + '</td>';    
+                    }
+                    
+                    else if (item.status)
+                    {
+                        html += '<td >' + 'جاري الشحن' + '</td>';    
+                    }
+                    
+                                             
+                    html += '<td style="text-align: center;" ><a href="javascript:void(0);" onclick=Delete(' + item.orderID + '); return false;>' +
+                        '<i class="fas fa-times" style="font-size: 20px;color: red;"></i></a></td>';
+                    html += '</tr>';
+                    i++;
+                    $('.tbody').html(html);
+                })
+
+            },
+            error: function (e) { }
+        });
+    }
+
+    function Delete(orderID) {
+        if (confirm("تاكيد الحذف")) {
+            $.ajax({
+                type: "POST",
+                dataType: false,
+                url: "/Orders/DeleteOrder",
+                data: { orderID: orderID },
+                success: function (data, xhr, status) {
+                    Notiflix.Notify.Success('تم الحذف');
+                    GetUserOreders();
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                    Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                }
+            });
+        }
+    }
+
+</script>
+

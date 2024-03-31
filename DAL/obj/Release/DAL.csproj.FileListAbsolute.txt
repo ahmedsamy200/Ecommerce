@@ -1,0 +1,17 @@
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\DAL.dll.config
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\DAL.dll
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\DAL.pdb
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\BLL.dll
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\DataModel.dll
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\EntityFramework.dll
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\BLL.pdb
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\BLL.dll.config
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\DataModel.pdb
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\DataModel.dll.config
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\EntityFramework.xml
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\obj\Release\DAL.csproj.CoreCompileInputs.cache
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\obj\Release\DAL.dll
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\obj\Release\DAL.pdb
+C:\Users\DELL\source\repos\E-Ecommerce\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache

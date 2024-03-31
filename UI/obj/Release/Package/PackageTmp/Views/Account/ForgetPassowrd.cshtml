@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "استرجاع كلمة المرور";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<head>
+    <link href="~/assets/css/login.css" rel="stylesheet" />
+</head>
+<section class="login-section" style="margin-top:110px">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                <div class="wrap">
+                    <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last" style="width:100%;height:40px">
+                        <div class="mytext w-100">
+                            <p style="font-size:16px">سيم ارسال كلمه المرور الي البريد الخاص بك برجاء ادخال البريد المستخدم عند التسجل </p>
+                        </div>
+                    </div>
+                    <div class="login-wrap p-4 p-lg-5" style="width:100%">                        
+                       <div class="signin-form">
+                            <div class="form-group mb-4">
+                                <label class="label mb-4" for="name">البريد الإلكتروني</label>
+                                <input type="text" class="form-control" placeholder="البريد الإلكتروني" required id="txtEmail">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="form-control btn btn-primary submit px-3" id="btnSend">ارسال</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

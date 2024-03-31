@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c5ed7900625c4c13bd9083fc0df5e491" Name="Diagram1">
+        <EntityTypeShape EntityType="EcommerceModel.Cart" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceModel.Category" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceModel.Customer" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceModel.OrderDetail" Width="1.5" PointX="7.625" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceModel.Order" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceModel.Product" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceModel.ProductReview" Width="1.5" PointX="8.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceModel.Role" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceModel.sysdiagram" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="EcommerceModel.FK_Cart_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="EcommerceModel.FK_Cart_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="EcommerceModel.FK_Product_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="EcommerceModel.FK_ProductReview_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="EcommerceModel.FK_Users_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="EcommerceModel.FK_OrderDetails_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="EcommerceModel.FK_ProductReview_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="EcommerceModel.FK_OrderDetails_Product" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

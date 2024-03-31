@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "إنشاء حساب جديد";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<head>
+    <link href="~/assets/css/login.css" rel="stylesheet" />
+</head>
+
+<section class="register-section" style="margin-top:110px">
+    <div class="container">
+
+        <div class="row justify-content-center" >
+            <div class="col-md-12 col-lg-10">
+                <div class="wrap d-md-flex">
+                    <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last" style="width:35%">
+                        <div class="mytext w-100">
+                            <h2 style="font-size: 25px;">انشاء حساب  جديد</h2>
+                            <p>تسجيل الدخول</p>
+                            <a href="/Account/Login" class="btn btn-white btn-outline-white">الدخول</a>
+                        </div>
+                    </div>
+                    <div class="login-wrap p-4 p-lg-5" style="width:65%"> 
+                        <div class="d-flex">
+                            <div class="w-100 text1">
+                                <h3 class="mb-4">انشاء حساب</h3>
+                            </div>
+                            <div class="w-100">
+                                <p class="social-media d-flex justify-content-end">
+                                    <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fab fa-facebook-f"></span></a>
+                                    <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fab fa-twitter"></span></a>
+                                </p>
+                            </div>
+                        </div>
+                        <div action="#" class="signin-form">
+                            <div class="form-group mb-3">
+                                <label class="label" for="Fname">الاسم</label>
+                                <input type="text" class="form-control" placeholder="الاسم" required id="txtFName">
+                                <p style="color: rgb(255, 51, 0);" id="invalidFName">يجب ادخال الاسم ! </p>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="lName">اسم العائله</label>
+                                <input type="text" class="form-control" placeholder="اسم العائله" required id="txtLName">
+                                <p style="color: rgb(255, 51, 0);" id="invalidLName">يجب ادخال اسم العائله ! </p>
+
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="name">البريد الإلكتروني</label>
+                                <input type="text" class="form-control" placeholder="البريد الإلكتروني" required id="txtEmail">
+                                <p style="color: rgb(255, 51, 0);" id="invalidEmail">يجب ادخال البريد الالكتروني ! </p>
+
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="password">كلمه المرور</label>
+                                <input type="password" class="form-control" placeholder="كلمه المرور" required id="txtPassword">
+                                <p style="color: rgb(255, 51, 0);" id="invalidPassword">يجب ادخال كلمه المرور ! </p>
+
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="Phone">رقم الهاتف (اختياري)</label>
+                                <input type="text" class="form-control" placeholder="رقم الهاتف" required id="txtPhone">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" onclick="Register()" class="form-control btn btn-primary submit px-3" id="btnRegister">تسجيل</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        $('#invalidFName').hide();
+        $('#invalidLName').hide();
+        $('#invalidEmail').hide();
+        $('#invalidPassword').hide();
+    })
+
+    function Register() {
+        $('#invalidFName').hide();
+        $('#invalidLName').hide();
+        $('#invalidEmail').hide();
+        $('#invalidPassword').hide();
+        var FName = $('#txtFName').val();
+        var LName = $('#txtLName').val();
+        var Email = $('#txtEmail').val();
+        var Password = $('#txtPassword').val();
+        var Phone = $('#txtPhone').val();
+        if (FName == "" || FName == undefined) {
+            $('#invalidFName').slideDown();
+        }
+        else if (LName == "" || LName == undefined) {
+            $('#invalidLName').slideDown();
+        }
+        else if (Email == "" || Email == undefined) {
+            $('#invalidEmail').slideDown();
+        }
+        else if (Password == "" || Password == undefined) {
+            $('#invalidPassword').slideDown();
+        }
+        else {
+            $.ajax({
+                url: "/Account/AddUser?firstName=" + FName +
+                "&lastName=" + LName +
+                "&email=" + Email +
+                "&password=" + Password +
+                "&mobile=" + Phone +
+                "&roleID=" + 2,
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+                    if (result == "Success") {
+
+                        Notiflix.Notify.Success('تم التسجيل بنجاح');
+                        window.location = "/Shop/Index";
+                    }
+                    else if (result == "erorr") {
+                        Notiflix.Notify.Failure('البريد الذي ادخلته مستخدم مسبقا');
+                    }
+                    else {
+                        Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                    }
+                }
+
+
+            });
+        }
+    }
+</script>
+
+

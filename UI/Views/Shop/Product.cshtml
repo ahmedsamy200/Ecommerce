@@ -1,0 +1,310 @@
+﻿
+@{
+    ViewBag.Title = "Product";
+    if (Session["UserID"] != null)
+    {
+        Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    }
+    else if (Session["UserID"] == null)
+    {
+        Layout = "~/Views/Shared/_MyLayout.cshtml";
+    }
+}
+
+<head>
+    <link href="~/assets/css/Product.css" rel="stylesheet" />
+</head>
+<h2>المتجر</h2>
+
+<section class="ProductPage" style="margin-top:80px">
+    <div class="container">
+        <div class="top-section">
+            <div class="row mb-5">
+                <div class="col-md-5">
+                    <img class="myImg card-img-top card-img img-fluid" style="height: 415px;padding-bottom:15px" alt="...">
+                </div>
+                <div class="col-md-6">
+                    <h2  class="productName"></h2>
+                    <p class="productCategory"  style="line-height: 1;margin-bottom:13px;margin-top: 13px;" ></p>
+                    <div class="stars-outer AllAvgStar">
+                        <div class="stars-inner"></div>
+
+                    </div>
+                    <span class="px-2" style="color: #333333bf;">(<a href="#" class="ReviewCounter"></a>)</span>
+                    <h1 class="my-3 " style="color: #6e1c23;font-weight: 700;font-size: 24px;"> <span class="price"></span><span style="padding-right: 5px;font-size: 21px;color: #6e1c23cf;">جنيه</span></h1>
+                    <p class="productDescription" style="line-height: 2.5;word-spacing: 2px;"></p>
+                    <input class="form-control txtQuantity" type="number" step="1" value="1" style="margin-top: 40px;" />
+                    <span class="invalidQuantity" style="color:red"> يجب اظافه عنصر واحد علي الاقل</span>
+                    <button class="btn btn-primary form-control my-3 QV-btn-addCard">
+                        <i class="fas fa-shopping-cart pl-2" style="font-size:14px"></i>
+                        <span style="font-size:14px">اضافه الي السلة</span>
+
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="reviews" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,0.05);position: relative;border-radius: 4px;">
+            <div class="review-header">
+                <h2>تعليق العملاء</h2>
+            </div>
+            <div class="review-content">
+                  <div class="row">
+                      <div class="col-md-4 " style="padding-top: 17px;">
+                          <h3  style="font-size:16px;margin-bottom:20px">تقييمات المنتج (<span class="ReviewCounter"></span>)</h3>
+                          <div class="review" style="background-color: #f5f5f5;">
+                              <div style="margin-top: 26px;margin-bottom:7px">
+                                  <span>5</span>
+                                  /<span class="avgStar"></span>
+                              </div>
+                              <div class="star-rating" style="font-size: 17px;">
+                                  <div class="stars-outer">
+                                      <div class="stars-inner"></div>
+                                  </div>
+                              </div>
+                              <p style="font-size: 19px;"> ‎<span class="ReviewCounter"></span> تقييم</p>
+                          </div>
+                          <div class="stars" style="padding-top: 30px;">
+
+                              <div class="star-5 dd">
+                                  5 
+                                  <span class="one-star"></span>
+                                  <p>(<span class="star-five"></span>)</p>
+                                  <div class="myProgress">
+                                  </div>
+                              </div>
+                              <div class="star-4 dd">
+                                  4
+                                  <span class="one-star"></span>
+                                  <p>(<span class="star-four"></span>)</p>
+                                  <div class="myProgress" style="background-image: linear-gradient(to right,#f6b01e 33.5%,#ededed 33.5%);">
+                                  </div>
+                              </div>
+                              <div class="star-3 dd">
+                                  3
+                                  <span class="one-star"></span>
+                                  <p>(<span class="star-three"></span>)</p>
+                                  <div class="myProgress">
+                                  </div>
+                              </div>
+                              <div class="star-2 dd">
+                                  2
+                                  <span class="one-star"></span>
+                                  <p>(<span class="star-two"></span>)</p>
+                                  <div class="myProgress" style="background-image: linear-gradient(to right,#f6b01e 0%,#ededed 0%);">
+                                  </div>
+                              </div>
+                              <div class="star-1 dd">
+                                  1
+                                  <span class="one-star"></span>
+                                  <p>(<span class="star-one"></span>)</p>
+                                  <div class="myProgress">
+                                  </div>
+                              </div>
+
+                          </div>
+                      </div>
+                      <div class="col-md-7" style="padding-top: 17px;">
+                          <h3 style="font-size:16px;margin-bottom:20px">تعليقات المنتج (<span class="CommentsCounter">0</span>)</h3>
+                          <div class="comment-Container">
+                             <div class="noComments">
+                              <p>  لا توجد اي تعليقات</p> 
+                             </div>
+                              <div class="all-comments">
+
+                              </div>
+                          </div>
+
+
+                          <div class="add-comment mt-5">
+                              <h2 style="font-size: 25px;">اضافه تعليق</h2>
+                              <h3 class="mt-3" style="font-size: 21px;">تقيمك</h3>
+                              <p class="stars" style="margin-top: 12px;margin-bottom: 13px;direction: ltr;">
+                                  <span>
+                                      <a class="star-5">5</a>
+                                      <a class="star-4">4</a>
+                                      <a class="star-3">3</a>
+                                      <a class="star-2">2</a>
+                                      <a class="star-1">1</a>
+                                  </span>
+                              </p>
+  
+                              <div class="user-comment">
+                                  <span>تعليقك</span>
+                                  <textarea id="comment" name="comment" cols="45" rows="8" required=""></textarea>
+
+                                  <div class="div-btn">
+                                      <button class="btn btn-primary btn-addComment" onclick="AddComment()">
+                                        
+                                          <span style="font-weight:600;padding-right: 5px;padding-left: 7px;">تعليق </span> 
+                                          <i class="far fa-paper-plane" style="font-weight:600"></i>
+                                      </button>
+                                      <input type="hidden" class="hdnRate" value="0"/>
+                                      <input type="hidden" class="hdnProdID"/>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>  
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+
+
+    $(document).ready(function () {
+        loadProduct();
+        loadComments();
+        $('.stars a').on('click', function () {
+            $('.stars a').removeClass('active');
+            $(this).addClass('active');
+            $('.hdnRate').val($(this).text());
+        });
+        $('.noComments').hide();
+        $('.invalidQuantity').hide();
+        $('.QV-btn-addCard').click(function () {
+            var quantity = $('.txtQuantity').val();
+            if (quantity < 1) {
+                $('.invalidQuantity').show();
+                return false;
+            }
+            var prodID = $('.hdnProdID').val();
+            AddToCart(prodID, quantity);
+        })
+
+    })
+
+    function loadProduct() {
+        var baseUrl = (window.location).href; // You can also use document.URL
+        var id = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
+        $.ajax({
+            url: "/Product/GetProductByID?id=" + id,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var defultImg = "default.png";
+                var html = '';
+
+                $.each(result, function (key, item) {
+                    if (result.countComments == 0)
+                    {
+                        $('.noComments').show();
+                    }
+
+                    $(".myImg").attr("src", '/Images/Products/' + result.img);
+                    $('.productName').text(result.prodName);
+                    $('.hdnProdID').val(result.productID)
+                    $('.productCategory').text(result.CategoryName);
+                    $('.ReviewCounter').text(result.numberOfReviews);
+                    $('.AllAvgStar .stars-inner').css("width", result.totalStars + "%");
+                    $('.review .stars-inner').css("width", result.totalStars + "%");
+
+                    $('.price').text(result.price - (result.discount / 100 * result.price));
+                    $('.productDescription').text(result.prodDescription);
+                    $('.star-one').text(result.oneTotal);
+                    $('.star-two').text(result.twoTotal);
+                    $('.star-three').text(result.threeTotal);
+                    $('.star-four').text(result.fourTotal);
+                    $('.star-five').text(result.fiveTotal);
+                    $('.star-5 .myProgress').css("background-image", "linear-gradient(to right,#f6b01e " + result.starFiveAvg + "%,#ededed " + result.starFiveAvg + "%)");
+                    $('.star-4 .myProgress').css("background-image", "linear-gradient(to right,#f6b01e " + result.starFourAvg + "%,#ededed " + result.starFourAvg + "%)");
+                    $('.star-3 .myProgress').css("background-image", "linear-gradient(to right,#f6b01e " + result.starThreeAvg + "%,#ededed " + result.starThreeAvg + "%)");
+                    $('.star-2 .myProgress').css("background-image", "linear-gradient(to right,#f6b01e " + result.starTwoAvg + "%,#ededed " + result.starTwoAvg + "%)");
+                    $('.star-1 .myProgress').css("background-image", "linear-gradient(to right,#f6b01e " + result.starOneAvg + "%,#ededed " + result.starOneAvg + "%)");
+                    $('.avgStar').text(result.avgStar);
+                });
+            }
+        });
+
+    }
+    function loadComments() {
+        var baseUrl = (window.location).href; // You can also use document.URL
+        var id = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
+        $.ajax({
+            url: "/Comment/GetProductComments?prodID=" + id,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var defultImg = "default1.jpg";
+                var html = '';
+                $.each(result, function (key, item) {
+                    $('.CommentsCounter').text(item.countComments);
+                    html += ' <div class="comment">';
+                    if (item.customerImage == null) {
+                        html += '<img class="avatar" src="/Images/users/' + defultImg + '" />';
+                    } else
+                        html += '<img class="avatar" src="/Images/users/' + item.customerImage + '" />';
+                    html += ' <div class="comment-text">';
+                    html += ' <div class="star-rating">';
+                    html += ' <div class="stars-outer">';
+                    html += ' <div class="stars-inner" style="width: ' + item.finalResult + '%"></div>';
+                    html += ' </div>';
+                    html += '</div>';
+                    html += '<p>';
+                    html += ' <strong>' + item.customerName +'</strong>';
+                    html += '<span class="mx-1">-</span>';
+                    html += '<time>' + item.commentDate +'</time>';
+                    html += '</p>';
+                    html += '<div class="description">';
+                    html += '<p>' + item.comment +'</p>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+
+                });
+                $('.all-comments').html(html);
+            }
+        });
+
+    }
+
+    function AddComment() {
+        var baseUrl = (window.location).href; // You can also use document.URL
+        var prodID = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
+        var ratting = $('.hdnRate').val();
+        var comment = $('#comment').val();
+        if (ratting == 0) {
+            Notiflix.Notify.Failure('يجيب تحدد عدد النجوم');
+            return false;
+        }
+        else {
+            $.ajax({
+                url: "/Comment/AddComment?productID=" + prodID +
+                "&comment=" + comment +
+                "&rating=" + ratting,
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result == "success") {
+                        Notiflix.Notify.Success('تم اضافه التقييم');
+                        $('.noComments').hide();
+
+                        loadProduct();
+                        loadComments();
+                        $('.hdnRate').val(0);
+                        $('#comment').val('');
+                    }
+                    else if (result == "AddedBefor") {
+                        Notiflix.Notify.Failure('لقد قمت باظافه تقييم من قبل');
+                    }
+                    else if (result == "fail") {
+                        Notiflix.Notify.Failure('عذرا تم خطا ما');
+                    }
+                    else if (result == "GoToLogin") {
+                        window.location = "/account/login";
+                    }
+                }
+            });
+
+        }
+    }
+</script>

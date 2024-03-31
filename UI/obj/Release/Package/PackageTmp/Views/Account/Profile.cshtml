@@ -1,0 +1,234 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<style>
+    .right-side-content form{
+        display:contents;
+    }
+</style>
+
+<link href="~/assets/css/profile.css" rel="stylesheet" />
+<section class="profile-section">
+    <div class="container">
+
+        <div class="row mb-5">
+            <div class="col-md-10" style="box-shadow: 0 0 12px 0 rgb(0 0 0 / 12%);margin:0 auto">
+                <div class="row" style="padding:20px">
+
+                        <div class="col-md-3 right-side">
+                            <div class="right-side-content">
+                            @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div>
+                                    <img class="img-fluid" id="my-photo" src="~/Images/users/user2.jpg" />
+                                </div>
+                                <div class="imgUpload">
+                                    <label for="fileToUpload" class="lbledit"><i class="far fa-pen"></i></label>
+                                    <input type="file" name="file" id="fileToUpload" style="display:none" onchange="preview()"   required = "required"/>
+                                </div>
+
+                                <button class="btn btn-success btnSavePhote">تعديل</button>
+                            }
+                            </div>
+
+                        </div>
+                  
+
+
+                    <div class="col-md-9">
+                        <div class="col-12 left-side">
+                            <div class="left-side-content">
+                                <div class="right" >
+                                    <a href="#">
+                                        <span>المعلومات الشخصيه</span>
+                                    </a>
+                                </div>
+                                <div class="left pt-1">
+                                    <a href="javascript:void(0)" onclick="removeDisable()">
+                                        <i  class="far fa-pen" style="color: green;font-size: 19px; margin-top: 12px;"></i>
+
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row user-details">
+                            <div class="col-md-6 col-12">
+                                <label>الاسم</label>
+                                <input disabled type="text" class="form-control txtFName" />
+                                <p style="color: rgb(255, 51, 0);" id="invalidFName">يجب ادخال الاسم ! </p>
+
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <label>اسم العائله</label>
+                                <input disabled type="text" class="form-control txtLName" />
+                                <p style="color: rgb(255, 51, 0);" id="invalidLName">يجب ادخال اسم العائله ! </p>
+
+                            </div>
+                            <div class="col-md-12">
+                                <label>البريد الالكتروني</label>
+                                <input disabled type="text" class="form-control txtEmail" />
+                                <p style="color: rgb(255, 51, 0);" id="invalidEmail">يجب ادخال البريد الالكتروني ! </p>
+
+                            </div>
+                            <div class="col-md-12">
+                                <label>الهاتف</label>
+                                <input disabled type="text" class="form-control txtPhone" />
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <label>البلد</label>
+                                <input disabled type="text" class="form-control txtCountry" />
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <label>المحافظه</label>
+                                <input disabled type="text" class="form-control txtCity" />
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <label>المنطقه</label>
+                                <input disabled type="text" class="form-control txtState"/>
+                            </div>
+
+                        </div>
+                        <div class="divBtn" style="display:none" >
+                            <button class="btn btn-success btnUpdateData" style="margin-top:15px;margin-bottom:15px">حفظ</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+ 
+
+<script>
+    $(document).ready(function () {
+        $('#invalidFName').hide();
+        $('#invalidLName').hide();
+        $('#invalidEmail').hide();
+        LoadUserData();
+
+        $('.btnUpdateData').click(function () {
+            UpdateUserData();
+        });
+
+        //$('.btnSavePhote').click(function () {
+        //    var image = $('#fileToUpload').val();
+        //    $.ajax({
+        //        url: "/Account/UploadImage?file=" + image,
+        //        type: "POST",
+        //        contentType: "application/json;charset=utf-8",
+        //        dataType: "json",
+        //        success: function (result) {
+        //            if (result == "Success") {
+        //                Notiflix.Notify.Success('تم اتحديث الصوره الشخصيه');
+        //            }
+        //            else {
+        //                Notiflix.Notify.Failure('عذرا تم خطا ما');
+
+        //            }
+        //        }
+        //    })
+        //});
+
+    })
+
+    function LoadUserData() {
+        $.ajax({
+            url: "/Account/LoadUserData",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var defultImg = "user2.jpg";
+                $.each(result, function (key, item) {
+                    $('.txtFName').val(result.firstName);
+                    $('.txtLName').val(result.lastName);
+                    $('.txtEmail').val(result.email);
+                    $('.txtPhone').val(result.mobile);
+                    $('.txtCountry').val(result.country);
+                    $('.txtCity').val(result.city);
+                    $('.txtState').val(result.state);
+                    if (result.image != null) {
+                        $('#my-photo').attr("src", '/Images/users/' + result.image);
+                    }
+                    else {
+                        $('#my-photo').attr("src", '/Images/users/' + defultImg);
+
+                    }
+                })
+            }
+        })
+    }
+    function preview() {
+        $('#my-photo').attr('src', URL.createObjectURL(event.target.files[0]));
+    }
+    function removeDisable() {
+        $('.user-details input').removeAttr("disabled");
+        $('.divBtn').slideDown();
+    }
+    function AddDisable() {
+        $('.user-details input').attr("disabled", true);
+        $('.divBtn').slideUp();
+    }
+
+    function UpdateUserData() {
+        $('#invalidFName').hide();
+        $('#invalidLName').hide();
+        $('#invalidEmail').hide();
+        var FName = $('.txtFName').val();
+        var LName = $('.txtLName').val();
+        var Email = $('.txtEmail').val();
+        var Phone = $('.txtPhone').val();
+        var Country = $('.txtCountry').val();
+        var City = $('.txtCity').val();
+        var State = $('.txtState').val();
+        if (FName == "" || FName == undefined) {
+            $('#invalidFName').slideDown();
+        }
+        else if (LName == "" || LName == undefined) {
+            $('#invalidLName').slideDown();
+        }
+        else if (Email == "" || Email == undefined) {
+            $('#invalidEmail').slideDown();
+        }
+        else {
+            $.ajax({
+                url: "/Account/UpdateUserData?firstName=" + FName +
+                "&lastName=" + LName +
+                "&email=" + Email +
+                "&country=" + Country +
+                "&city=" + City +
+                "&state=" + State +
+                "&mobile=" + Phone +
+                "&roleID=" + 2,
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+                    if (result == "Success") {
+                        Notiflix.Notify.Success('تم التحديث بنجاح');
+                        AddDisable();
+
+                    }
+                    else if (result == "NotValid") {
+                        Notiflix.Notify.Failure('البريد الذي ادخلته مستخدم مسبقا');
+                    }
+                    else if (result == "erorr") {
+                        Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                    }
+                }
+
+
+            });
+        }
+
+    }
+
+</script>

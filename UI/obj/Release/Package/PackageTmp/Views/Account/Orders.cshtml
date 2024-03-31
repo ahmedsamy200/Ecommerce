@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "طلباتي";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<link href="~/assets/css/orders.css" rel="stylesheet" />
+<section class="orders-section" >
+    <div class="container">
+        <div class="row" style="padding:20px">
+            <div class="col-md-10"  style="box-shadow: 0 0 12px 0 rgb(0 0 0 / 12%);margin:0 auto">
+                <div class="orders">
+                    <ul class="responsive-table">
+                        <li class="table-header">
+                            <div class="col col-1">رقم الاوردر</div>
+                            <div class="col col-2">تاريخ الطلب</div>
+                            <div class="col col-3">السعر</div>
+                            <div class="col col-4">الحاله</div>
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="رقم الاوردر">42235</div>
+                            <div class="col col-2" data-label="تاريخ الطلب">2020 يناير</div>
+                            <div class="col col-3" data-label="السعر">350 جنيه</div>
+                            <div class="col col-4" data-label="الحاله">انتظار</div>
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="Job Id">42442</div>
+                            <div class="col col-2" data-label="Customer Name">Jennifer Smith</div>
+                            <div class="col col-3" data-label="Amount">$220</div>
+                            <div class="col col-4" data-label="Payment Status">Pending</div>
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="Job Id">42257</div>
+                            <div class="col col-2" data-label="Customer Name">John Smith</div>
+                            <div class="col col-3" data-label="Amount">$341</div>
+                            <div class="col col-4" data-label="Payment Status">Pending</div>
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="Job Id">42311</div>
+                            <div class="col col-2" data-label="Customer Name">John Carpenter</div>
+                            <div class="col col-3" data-label="Amount">$115</div>
+                            <div class="col col-4" data-label="Payment Status">Pending</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+

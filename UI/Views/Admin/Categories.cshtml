@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="prods-section" style="margin-top:118px;margin-bottom: 60px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="mb-3">
+                        <button id="openModal"  class="btn btn-success" style="border-radius:7px" data-toggle="modal" data-target="#myModal">
+                            اضافه قسم
+                        </button>
+                    </div>
+
+                    <table class="table table-hover " >
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>اسم القسم</th>
+                                <th>الوصف</th>
+                                <th></th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="AllCats"></tbody>
+                    </table>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">اضافه قسم</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="CaregoryForm">
+                        <div class="modal-body">
+                            <div>
+                                <span>اسم القسم</span>
+                                <input id="categoryName" name="categoryName" type="text" class="form-control pp" required/>
+                            </div>
+                            <div>
+                                <span>الوصف</span>
+                                <input id="categoryDescription" name="categoryDescription" type="text" class="form-control pp" required/>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnAdd" class="btn btn-success Optionsbtn" onclick="Add()">حفظ</button>
+                            <button type="button" id="btnUpdate" class="btn btn-success Optionsbtn" onclick="Update()">تعديل</button>
+                            <button type="button" id="btnCancel" class="btn btn-danger Optionsbtn" data-dismiss="modal" onclick="ResetForm()">الغاء</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="hdnCatID"/>
+    </div>
+</section>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("li#liCategories").addClass("active");
+        GetAllCategories();
+        $('#btnUpdate').hide();
+        $('#openModal').click(function () {
+            ResetForm();
+            $('#btnAdd').show();
+            $('#btnUpdate').hide();
+        })
+
+    });
+
+    function GetAllCategories() {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/Admin/GetAllCategories",
+            success: function (result) {
+                var html = '';
+                var i = 1;
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + i + '</td>';
+                    html += '<td >' + item.categoryName + '</td>';
+                    html += '<td>' + item.categoryDescription + '</td>';              
+                    html += '<td style="text-align: center;" ><a href="javascript:void(0);" onclick=Edit(' + item.categoryID + '); return false; data-toggle="modal" data-target="#myModal">' +
+                        '<i class="fas fa-pen" style="font-size: 20px;color: #0a971b;"></i></a></td>';
+                    html += '<td style="text-align: center;" ><a href="javascript:void(0);" onclick=Delete(' + item.categoryID + '); return false;>' +
+                        '<i class="fas fa-times" style="font-size: 20px;color: red;"></i></a></td>';
+                    html += '</tr>';
+                    i++;
+                    $('#AllCats').html(html);
+                })
+
+            },
+            error: function (e) { }
+        });
+    }
+
+
+    function Add() {
+        $('#btnAdd').show();
+        $('#btnUpdate').hide();
+        var validator = $("#CaregoryForm").validate();
+        var flag = validator.form();
+        if (flag) {
+            $.ajax({
+                url: '/Admin/AddCategory',
+                type: 'POST',
+                data: new FormData($("#CaregoryForm")[0]),
+                contentType: false,
+                processData: false,
+                success: function (data, xhr, status) {
+                    $("#myModal").modal("hide");
+                    Notiflix.Notify.Success('تم الاضافه');
+                    GetAllCategories()
+                    ResetForm();
+                },
+                error: function (e) {
+                    Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                    alert(e.responseText);
+                }
+            });
+        }
+        else {
+            Notiflix.Notify.Failure('يجب ملئ جميع الحقول');
+        }
+    };
+
+    function Edit(id) {
+        $('#btnAdd').hide();
+        $('#btnUpdate').show();
+       
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/Admin/GetCategoryByID?id=" + id,
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    $('#categoryName').val(item.categoryName);
+                    $('#categoryDescription').val(item.categoryDescription);
+                    $('#hdnCatID').val(item.categoryID);
+                })
+            }
+
+        })
+    }
+
+    function Update() {
+        var id = $('#hdnCatID').val();
+        var validator = $("#CaregoryForm").validate();
+        var flag = validator.form();
+        if (flag) {
+            $.ajax({
+                url: '/Admin/UpdateCategory?id=' + id,
+                type: 'POST',
+                data: new FormData($("#CaregoryForm")[0]),
+                contentType: false,
+                processData: false,
+                success: function (data, xhr, status) {
+                    $("#myModal").modal("hide");
+                    Notiflix.Notify.Success('تم التعديل');
+                    GetAllCategories();
+                    ResetForm();
+                },
+                error: function (e) {
+                    Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                    alert(e.responseText);
+                }
+            });
+        }
+        else {
+            Notiflix.Notify.Failure('يجب ملئ جميع الحقول');
+
+        }
+    }
+
+    function ResetForm() {
+        $('.pp').val('');
+    }
+
+    function Delete(id) {
+        if (confirm("تاكيد الحذف")) {
+            $.ajax({
+                type: "POST",
+                dataType: false,
+                url: "/Admin/DeleteCategory",
+                data: { id: id },
+                success: function (data, xhr, status) {
+                    Notiflix.Notify.Success('تم الحذف');
+                    GetAllCategories();
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                    Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                }
+            });
+        }
+    }
+</script>

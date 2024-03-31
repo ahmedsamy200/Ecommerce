@@ -1,0 +1,399 @@
+﻿
+@{
+    ViewBag.Title = "Family Market";
+    if (Session["UserID"] != null)
+    {
+        Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    }
+    else if (Session["UserID"] == null)
+    {
+        Layout = "~/Views/Shared/_MyLayout.cshtml";
+    }
+
+} 
+
+<style>
+    .card button:hover {
+        box-shadow: 0 5px 11px 0 rgba(0,0,0,0.14), 0 4px 15px 0 rgba(0,0,0,0.12);
+    }
+</style>
+
+<!--Start Slider section-->
+<section class="start_home text-center" style="background-image: url('../../Images/img/start-home-bg1111.jpg');">
+    <div class="banner_top">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-9 banner-content">
+                    <a style="margin-top: -15px;margin-bottom: 13px;"><img src="~/Images/img/Shopping-Cart-3.png" style="width:85px"/></a>
+                   
+                    <h1> إتسوق ماركت </h1>
+                    <p>اول واكبر ماركت متكامل اون لاين في مصر حمل التطبيق واطلب الان والتوصيل في اقل من 60 دقيقه</p>
+                 <div style="position:relative" class="mt-2">
+                     <input type="text" name="title" class="form-control border-0" style="font-size:19px;max-width:100%;border-radius: 0px;padding: 26px!important;border:none!important;" placeholder="أدخل اسم المنتج او القسم..." maxlength="250">
+                     <button class="btn btn-success home-btn-search" style="font-size:18px;width: 150px;border-radius: 0px;color: #fff;height: 44px; position: absolute;top: 4px;left: 5px;">
+                         <i class="far fa-paper-plane"></i>
+                         بحث
+                     </button>
+                 </div>
+
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="shape-bottom">
+        <img src="~/Images/img/shape-4.svg" alt="shape" class="bottom-shape img-fluid">
+   
+    </div>
+</section>
+<!--End Slider section-->
+
+<!--Start featured Products  section-->
+<section style="margin-top:60px" class=" overflow-hidden aos-init aos-animate" data-aos="fade-up" data-aos-duration="1500">
+    <div class="container">
+        <div>
+            <h2 class="featherd-header">المتنجات المميزه</h2>
+            <p style="text-align:center;margin-bottom:22px;padding:8px;font-size:17px">مجموعه من المنتجات المتمزيه في موقعنا جرب الان و استمتع بالخصومات</p>
+            <hr class="mb-5"/>
+        </div>
+        <div class="loader" style="text-align:center">
+            <img src="~/Images/loader.gif" />
+
+        </div>
+        <div class="row featherd-product">
+
+        </div>
+    </div>
+
+</section>
+
+<!--Start Web-features  section-->
+<section class="Web-features-section overflow-hidden aos-init aos-animate" data-aos="fade-up" data-aos-duration="1500">
+    <div class="container">
+        <div class="section-header">
+            <h2>لماذا عليك استخدام موقعنا  </h2>
+            <p>اسهل موقع في الاستخدام والشراء والتوصيل جرب الان</p>
+        </div>
+        <div class="row">
+           
+            <div class="col-md-4" data-aos="fade-right" data-aos-duration="2000">
+                <div class="Web-features ">
+                    <span class="Web-features-icon">
+                        <img class="img-fluid" src="~/Images/img/myicon4.svg" />
+                    </span>
+                    <div class="feature-content">
+                        <h3> دعم 7/24 </h3>
+                        <p>نوفر طرق كثيره لدعم العملاء من خلال البريد او رقم الهاتف </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="fade-left" data-aos-duration="1500">
+                <div class="Web-features ">
+                    <span class="Web-features-icon">
+                        <img class="img-fluid" src="~/Images/img/myicon7.svg" />
+                    </span>
+                    <div class="feature-content">
+                        <h3>سعر أفضل</h3>
+                        <p>افضل الاسعار وافضل المنتجات وسهوله في الشراء</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="fade-right" data-aos-duration="1500">
+                <div class="Web-features ">
+                    <span class="Web-features-icon">
+                        <img class="img-fluid" src="~/Images/img/myicon8.svg" />
+
+                    </span>
+                    <div class="feature-content">
+                        <h3>حلول دفع مختلفة</h3>
+                        <p>متوفر طرق دفع مختلفه عن طريق الفيزا او الماستر كارد او الدفع من باب البيت</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--End Web-features section-->
+
+<!--Start top sale Products  section-->
+<section class="feature-Products " data-aos="fade-up" data-aos-duration="1500" style="margin-bottom:90px">
+    <div class="container">
+        <div class="section-header" style="margin-bottom:75px">
+            <h2> الاكثر مبيعا </h2>
+            <p> مجموعه من المنتجات المتمزيه في موقعنا جرب الان و استمتع بالخصومات</p>
+        </div>  
+        <div class="loader" style="text-align:center">
+            <img src="~/Images/loader.gif" />
+
+        </div>
+        <div class="feature-Products-carousel">
+            <div class="owl-carousel owl-theme">                    
+                <div>
+
+                </div>
+                <div >
+
+                </div>
+                <div>
+
+                </div>
+                <div>
+
+                </div>
+                <div>
+
+                </div>
+                <div>
+
+                </div>
+                <div>
+
+                </div>
+                <div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--End  top sale Products  section-->
+
+<div class="QuickViewModal">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="margin-top: 40px;">
+            <div class="modal-content">
+                <div class="modal-header" style="padding-bottom: 7px;">
+                    <h4 class="modal-title" style="font-weight: 700;color: #949698;"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <input type="hidden" class="hdnProdID"/>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <img class="card-img-top card-img img-fluid prodImg" style="height:100%;padding-bottom:15px" alt="...">
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="productName"></h2>
+                            <p class="productCategory" style="line-height: 1;margin-bottom:13px;margin-top: 13px;"></p>
+                            <div class="stars-outer">
+                                <div class="stars-inner"></div>
+
+                            </div>
+                            <span class="px-2" style="color: #333333bf;">(<a  href="#" class="ReviewCounter"></a>)</span>
+                            <h1 class="my-3 " style="color: #6e1c23;font-weight: 700;font-size: 24px;"> <span class="price"></span><span style="padding-right: 5px;font-size: 21px;color: #6e1c23cf;">جنيه</span></h1>
+                            <p class="productDescription">
+                            </p>
+                            <input class="form-control txtQuantity" type="number" step="1" value="1" style="margin-top: 40px;" />
+                            <span class="invalidQuantity" style="color:red"> يجب اظافه عنصر واحد علي الاقل</span>
+                            <button class="btn btn-primary form-control my-3 QV-btn-addCard" >
+                                <i class="fas fa-shopping-cart pl-2" style="font-size:14px"></i>
+                                <span style="font-size:14px">اضافه الي السلة</span>
+
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Go to top button-->
+
+<div class="back-top">
+    <a href="#" class="back-top-button">
+    </a>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('.loader').hide();     
+        CountItemInCart();
+        CountItemInFavorate();
+        CheakFavorate();
+
+        $('.QV-btn-addCard').click(function () {
+            var quantity = $('.txtQuantity').val();
+            if (quantity < 1) {
+                $('.invalidQuantity').show();
+                return false;
+            }
+            var prodID = $('.hdnProdID').val();
+            AddToCart(prodID, quantity);
+        })
+        GetFeaturedProducts();
+        GetTopSaleProducts();
+
+    })
+
+    function GetFeaturedProducts() {
+
+        $.ajax({
+            url: "/Shop/GetFeaturedProducts",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+
+            success: function (result) {
+                var defultImg = "default.png";
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += ' <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-duration="800">';
+                    html += ' <div class="card" style="width: 18rem;">';
+                    html += '  <a href="/Shop/Product?id=' + item.productID + '">';
+                    if (item.img == null) {
+                        html += '<img class="card-img-top card-img img-fluid" src="/Images/Products/' + defultImg + '" />';
+                    } else
+                        html += '<img class="card-img-top card-img img-fluid" src="/Images/Products/' + item.img + '" />';
+                    html += '</a>';
+                    html += '<div class="card-body">';
+                    html += '<h5 class="card-title " style="font-size:26px">' + item.prodName + '</h5>';
+                    html += ' <p class="small text-muted text-uppercase mb-2">' + item.CategoryName + '</p>';
+                    html += '<div class="stars-outer">';
+                    html += ' <div class="stars-inner" style="width: ' + item.totalStars + '%"></div>';
+                    html += ' </div>';
+                    html += ' <hr />';
+                    html += '<h6 class="mb-3" style="padding: 11px 21px 10px 21px;">';
+                    if (item.discount > 0) {
+                        html += '<div class="Product-bage">';
+                        html += '<span>- ' + item.discount +'%</span>';
+                        html += '</div>';
+                        html += '<span class="text-grey old-price" style="color: #8f91a8;"><s>' + item.price + '  جنيه </s></span>';
+                        html += '<span class="text-danger mr-1 new-price" style="font-size:19px;font-weight: 900;">' + (item.price - (item.discount / 100 * item.price)) + '  جنيه   </span>';
+                    } else {
+                        html += '<span class="text-danger mr-1 new-price" style="font-size:19px;font-weight: 900;">' + item.price + ' جنيه </span>';
+                    }
+                    html += ' </h6>';
+                    html += '<div class="row">';
+
+                    html += '<button  onclick=QuickView(' + item.productID + '); type="button" data-toggle="modal" data-target=".bd-example-modal-lg" class="col-2 col-sm-3 col-lg-2  btn btn-light mb-2 btn-view my-btn" style="margin-left:7px">';
+                    html += ' <i class="fas fa-search"></i>';
+                    html += '</button>';
+                    html += '<button type="button"  onclick=AddToCart(' + item.productID + ',' + 1 +'); class="col-sm-8 col-lg-9  btn btn-primary mb-2 btn-addCard test-add my-btn">';
+                    html += '<i class="fas fa-shopping-cart pl-2" style="font-size:14px"></i> <span style="font-size:14px"> اضافه الي العربة</span>';
+                    html += '</button>';
+
+                    html += '<button  onclick=AddToFavorate(' + item.productID +'); type="button" class="btn btn-danger  mb-2 btn-love test-love addToFavorate">';
+                    html += '<i class="far fa-heart heart' + item.productID +'" style="padding-left:0"></i>';
+                    html += '</button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    //GetAvgRating(item.price);
+                });
+                $('.featherd-product').html(html);
+                $('.loader').hide();     
+                CheakFavorate();
+
+            }
+        });
+    }
+    function GetTopSaleProducts() {
+
+          $.ajax({
+              url: "/Shop/GetTopSaleProducts",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            beforeSend: function () {
+                $('.loader').show();
+            },
+            success: function (result) {
+                var defultImg = "default.png";
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += ' <div class="owl-item active" style="width: 270px; margin-left: 10px;">';
+                    html += ' <div class="card" style="width: 18rem;">';
+                    html += '  <a href="/Shop/Product?id=' + item.productID + '">';
+                    if (item.img == null) {
+                        html += '<img class="card-img-top card-img img-fluid" src="/Images/Products/' + defultImg + '" />';
+                    } else
+                        html += '<img class="card-img-top card-img img-fluid" src="/Images/Products/' + item.img + '" />';
+                    html += '</a>';
+                    html += '<div class="card-body">';
+                    html += '<h5 class="card-title " style="font-size:26px">' + item.prodName + '</h5>';
+                    html += ' <p class="small text-muted text-uppercase mb-2">' + item.CategoryName + '</p>';
+                    html += '<div class="stars-outer">';
+                    html += ' <div class="stars-inner" style="width: ' + item.totalStars + '%"></div>';
+                    html += ' </div>';
+                    html += ' <hr />';
+                    html += '<h6 class="mb-3" style="padding: 11px 21px 10px 21px;">';
+                    if (item.discount > 0) {
+                        html += '<div class="Product-bage">';
+                        html += '<span>- ' + item.discount +'%</span>';
+                        html += '</div>';
+                        html += '<span class="text-grey old-price" style="color: #8f91a8;"><s>' + item.price + '  جنيه </s></span>';
+                        html += '<span class="text-danger mr-1 new-price" style="font-size:19px;font-weight: 900;">' + (item.price - (item.discount / 100 * item.price)) + '  جنيه   </span>';
+                    } else {
+                        html += '<span class="text-danger mr-1 new-price" style="font-size:19px;font-weight: 900;">' + item.price + ' جنيه </span>';
+                    }
+                    html += ' </h6>';
+                    html += '<div class="row">';
+
+                    html += '<button  onclick=QuickView(' + item.productID + '); type="button" data-toggle="modal" data-target=".bd-example-modal-lg" class="col-2 col-sm-3 col-lg-2  btn btn-light mb-2 btn-view my-btn" style="margin-left:7px">';
+                    html += ' <i class="fas fa-search"></i>';
+                    html += '</button>';
+                    html += '<button type="button"  onclick=AddToCart(' + item.productID + ',' + 1 +'); class="col-sm-8 col-lg-9  btn btn-primary mb-2 btn-addCard test-add my-btn">';
+                    html += '<i class="fas fa-shopping-cart pl-2" style="font-size:14px"></i> <span style="font-size:14px"> اضافه الي العربة</span>';
+                    html += '</button>';
+
+                    html += '<button  onclick=AddToFavorate(' + item.productID +'); type="button" class="btn btn-danger  mb-2 btn-love test-love addToFavorate">';
+                    html += '<i class="far fa-heart heart' + item.productID +'" style="padding-left:0"></i>';
+                    html += '</button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    //GetAvgRating(item.price);
+                });
+                $('.owl-stage').html(html);
+                $('.loader').hide();     
+
+                CheakFavorate();
+
+            }
+        });
+
+    }
+    function QuickView(id) {
+        $('.txtQuantity').val(1);
+        $('.invalidQuantity').hide();
+        $.ajax({
+            url: "/Shop/GetProductByID?id=" + id,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var defultImg = "default.png";
+                var html = '';
+                $.each(result, function (key, item) {
+                    $('.modal-title').text(result.prodName);
+                    $(".prodImg").attr("src", '/Images/Products/' + result.img);
+                    $('.productName').text(result.prodName);
+                    $('.productCategory').text(result.CategoryName);
+                    $('.ReviewCounter').text(result.numberOfReviews);
+                    $('.modal-body .stars-inner').css("width", result.totalStars + "%");
+                    $('.price').text(result.price - (result.discount / 100 * result.price));
+                    $('.productDescription').text(result.prodDescription);
+                    $('.hdnProdID').val(result.productID);
+                });
+              }
+        });
+
+    }
+
+</script>

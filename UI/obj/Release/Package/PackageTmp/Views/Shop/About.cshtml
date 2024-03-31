@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "من نحن";
+    if (Session["UserID"] != null)
+    {
+        Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    }
+    else if (Session["UserID"] == null)
+    {
+        Layout = "~/Views/Shared/_MyLayout.cshtml";
+    }
+}
+
+
+<head>
+    <link href="~/assets/css/login.css" rel="stylesheet" />
+</head>
+
+<section class="login-section" style="margin-top:110px">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                <div class="wrap d-md-flex">
+                    <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last" style="width:35%">
+                        <div class="mytext w-100">
+                            <h3>اتسوق ماركت</h3>
+                          
+                        </div>
+                    </div>
+                    <div class="login-wrap p-4 p-lg-5" style="width:65%">
+                        <div class="d-flex">
+                            <div class="w-100 text1">
+                                <h3 class="mb-4">اتسوق ماركت</h3>
+                            </div>
+                            <div class="w-100">
+                                <p class="social-media d-flex justify-content-end">
+                                    <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fab fa-facebook-f"></span></a>
+                                    <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fab fa-twitter"></span></a>
+                                </p>
+                            </div>
+                        </div>
+                        <div action="#" class="signin-form">
+                            <div>
+                                <p style="font-size:17px"> 
+                                    اتسوق ماركت ، عبارة عن متجر تسوق إلكتروني ، ممتع، سهل الاستخدام، نوفر من خلاله لعملائنا الكرام مجموعة واسعة من المنتجات ذات الجودة العالية و بسعر جد تنافسي. فكرة إنشاء المتجر جاءت أساسا بهدف جعل عملية التسوق إلكترونيا عملية سهلة و بسيطة، تمنح للزبون كل مايحتاجه من أدوات للقيام بعملية شراء ناجحة، آمنة، و خالية من أي تعقيدات.
+
+                                    فهدفنا الرئيسي  هو رضا العملاء أولا عبر تقديم كل التسهيلات الممكنة في مجال التجارة الإلكترونية و التسوق عن بعد.
+
+                                    ستجد بالمتجر مجموعة واسعة من المنتجات تغطي جميع المجالات تقريبا من إلكترونيات، أدوات رياضية، مطبخ، مجوهرات، مواتف نقالة، أجهزة تلفزيون، أكسسوارات… و العديد من المنتجات الأخرى. نقوم باختيار المنتجات المعروضة بدقة عالية معتمدين في ذلك على العديد من الموردين من داخل مصر و خارجه.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

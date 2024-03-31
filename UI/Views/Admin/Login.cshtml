@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "تسجيل الدخول";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+
+}
+
+<head>
+    <link href="~/assets/css/login.css" rel="stylesheet" />
+</head>
+
+<section class="login-section" style="margin-top:110px">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-10 mb-4">
+                <div class="wrap d-md-flex" style="width: 600px !important; margin:0 auto">
+                    <div class="login-wrap p-4 p-lg-5 " style="width:100%">
+                        <div class="d-flex">
+                            <div class="w-100 text1">
+                                <h3 class="mb-4">تسجيل الدخول</h3>
+                            </div>
+                        </div>
+                        <div action="#" class="signin-form">
+                            <div class="form-group mb-3">
+                                <label class="label" for="name">البريد الإلكتروني</label>
+                                <input type="text" class="form-control" placeholder="البريد الإلكتروني" required id="txtEmail">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="password">كلمه المرور</label>
+                                <input type="password" class="form-control" placeholder="كلمه المرور" required id="txtPassword">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="form-control btn btn-primary submit px-3" id="btnLogin">دخول</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#btnLogin').click(function () {
+            var Email = $('#txtEmail').val();
+            var pass = $('#txtPassword').val();
+            $.ajax({
+                url: "/Admin/AdminLogin?email=" + Email +
+                "&password=" + pass,
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result == "Success") {
+
+                        Notiflix.Notify.Success('تم تسجيل الدخول بنجاح');
+                        window.location = "/Admin/Products";
+                    }
+                    else if (result == "erorr"){
+                        Notiflix.Notify.Failure('خطا في البريد الالكتروني او كلمه المرور');
+                    }
+                    else {
+                        Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                    }
+
+                }
+            });
+        })
+    })
+</script>

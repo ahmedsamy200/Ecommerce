@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "Product";
+    if (Session["UserID"] != null)
+    {
+        Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    }
+    else if (Session["UserID"] == null)
+    {
+        Layout = "~/Views/Shared/_MyLayout.cshtml";
+    }
+}
+
+<head>
+    <link href="~/assets/css/shoppingCart.css" rel="stylesheet" />
+</head>
+<style>
+    .btn-love {
+        position: inherit;
+
+        margin-right: 115px;
+        font-size: 24px;
+    }
+        .btn-love:hover {
+            background: none !important;
+        }
+</style>
+
+<section class="FavorateSection" style="margin-top:90px">
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 noItems">
+                <div class="text-center" style="margin-bottom:100px">
+                    <img src="~/Images/img/emptycart.svg" style="width:350px;height:380px" />
+                    <p style="font-size: 23px;">لا يوجد عناصر في المفضله</p>
+                    <a href="#" class="btn btn-success">اذهب للتسوق</a>
+                </div>
+            </div>
+
+            <div class="col-md-12 Favorates" style="margin-bottom: 80px;">
+                <div class="shopping-cart" style="margin: 0 auto;">
+                    <div class="title">
+                        قائمه المفضله
+                    </div>
+                    <div class="items">
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+</section>
+
+<script>
+    $(document).ready(function () {
+        GetUserFavorate();
+        $('.noItems').hide();
+
+    });
+
+    function GetUserFavorate() {
+
+        $.ajax({
+            url: "/Shop/GetUserFavorate",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var defultImg = "default.png";
+                var html = '';
+                if (result.length == 0) {
+                    $('.Favorates').hide();
+                    $('.noItems').show();
+
+                }
+
+                $.each(result, function (key, item) {
+
+                    html += '<div class="item">';
+
+                    html += '<div class="buttons" onclick="RemoveFromFavorate(' + item.productID +')">';
+                    html += '<span class="delete-btn"></span>';
+                    html += '</div>';
+
+                    html += '<div class="image">';
+                    html += '<img style="width: 100px;height: 85px;" src="/Images/Products/' + item.prodImg + '" alt="" />';
+                    html += '</div>';
+
+                    html += '<div class="description">';
+                    html += '<span class="prodName">' + item.prodName +'</span>';
+                    html += '<span class="prodDescription">' + item.CategoryName +'</span>';
+                    html += '<span class="prodColor" style="color:#827d7db0;">اسود</span>';
+                    html += '</div>';
+
+                    html += '<div class="total-price" style="margin-right: 80px;"> <span class="prod' + item.productID + '">' + item.price + '  </span><span class="currency">جنيه</span></div>';
+
+                    html += '<button onclick="RemoveFromFavorate(' + item.productID + ');" type="button" class="btn btn-danger  mb-2 btn-love test-love addToFavorate"><i class="far fa-heart heart' + item.productID +'" style="padding-left: 0px; font-weight: 900;"></i></button>';
+
+                    html += '</div>';
+
+                });
+                $('.items').html(html);
+
+            }
+        });
+    }
+
+    function RemoveFromFavorate(id) {
+
+        AddToFavorate(id);
+        GetUserFavorate();
+    }
+
+
+</script>

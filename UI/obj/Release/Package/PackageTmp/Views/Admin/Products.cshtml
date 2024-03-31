@@ -1,0 +1,279 @@
+﻿
+@{
+    
+    ViewBag.Title = "المنتجات";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    td {
+        font-size: 16px;
+        vertical-align: inherit !important;
+    }
+    .pp {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+<section class="prods-section" style="margin-top:118px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <button id="openModal"  class="btn btn-success" style="border-radius:7px" data-toggle="modal" data-target="#myModal">
+                        اضافه منتج
+                    </button>
+                </div>
+                <table class="table table-hover table-responsive">
+                    <thead>
+                        <tr >
+                            <th>اسم المنتج</th>
+                            <th>الوصف</th>
+                            <th>السعر</th>
+                            <th>الخصم</th>
+                            <th>العدد</th>
+                            <th>منتج جديد</th>
+                            <th>الصنف</th>
+                            <th>صوره المنتج</th>
+
+                            <th></th>
+                        </tr>
+
+                    </thead>
+                    <tbody id="tblProds">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">اضافه منتج</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="ProductForm">
+                   <div class="modal-body">
+                        <div>
+                            <span>اسم النتج</span>
+                            <input id="prodName" name="prodName" type="text" class="form-control pp" />
+                        </div>
+                        <div>
+                            <span>وصف النتج</span>
+                            <input id="prodDescription" name="prodDescription" type="text" class="form-control pp" />
+                        </div>
+                        <div>
+                            <span>السعر</span>
+                            <input id="price" name="price" type="text" class="form-control pp" />
+                        </div>
+                        <div>
+                            <span>الخصم</span>
+                            <input id="discount" name="discount" type="text" class="form-control pp" />
+                        </div>
+                        <div>
+                            <span>العدد</span>
+                            <input id="inStock" name="inStock" type="text" class="form-control pp" />
+                        </div>
+                        <div>
+                            <span>الصنف</span>
+                            <select id="category" name="categoryID" class="form-control pp">
+                                <option value="0" disabled selected> اختر الصنف</option>
+                                @foreach (var item in ViewBag.categories)
+                            {
+                            <option value="@item.categoryID">@item.categoryName</option>
+                            }
+
+                            </select>
+                        </div>
+                        <div>
+                            <span>منتج مميز</span>
+                            <select id="isFeature" name="isFeature" class="form-control pp">
+                                <option value="true">مميز</option>
+                                <option value="false">لا</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input id="prodImg" name="file" type="file" class="form-control-file pp" required onchange="preview()"/>
+                            <img class="img-fluid" id="my-photo" style="width:200px;height:200px"/>
+
+                        </div>
+                    </div>
+                   
+                    <div class="modal-footer">
+                        <button type="button" id="btnAdd" class="btn btn-success Optionsbtn" onclick="Add()">حفظ</button>
+                        <button type="button" id="btnUpdate" class="btn btn-success Optionsbtn" onclick="Update()">تعديل</button>
+                        <button type="button" id="btnCancel" class="btn btn-danger Optionsbtn" data-dismiss="modal" onclick="ResetForm()">الغاء</button>
+                    </div>
+
+                 </form>
+              </div>
+        </div>
+    </div>
+    <input type="hidden" id="hdnProdID"/>
+</section>
+
+<script>
+    var load = 0;
+    $(document).ready(function () {
+        $("li#liProducts").addClass("active");
+        GetAllProducts();
+        $('#my-photo').hide();
+        $('#btnUpdate').hide();
+        $('#openModal').click(function () {
+            ResetForm();
+            $('#btnAdd').show();
+            $('#btnUpdate').hide();
+        })
+
+    });
+
+    function GetAllProducts() {     
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/Shop/GetAllProducts",
+                success: function (result) {                  
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';                       
+                        html += '<td>' + item.prodName + '</td>';
+                        html += '<td >'+ item.prodDescription + '</td>';
+                        html += '<td>' + item.price +'ج'+ '</td>';
+                        html += '<td>' + ' %' + item.discount + '</td>';
+                        html += '<td>' + item.inStock + '</td>';
+                        if (item.isFeature) {
+                            html += '<td>' + 'جديد ' + '</td>';
+                        } else {
+                            html += '<td>' + 'لا' + '</td>';
+                        }
+                          
+                        html += '<td>' + item.CategoryName + '</td>';
+                        html += '<td>' + '<img style="width:60px;height:60px;border-radius:12px;" src="/Images/Products/' + item.img + '" />' + '</td>';
+                        html += '<td style="text-align: center;" ><a href="javascript:void(0);" onclick=Edit(' + item.productID + '); return false; data-toggle="modal" data-target="#myModal">' +
+                            '<i class="fas fa-pen" style="font-size: 20px;color: #0a971b;"></i></a></td>';
+                        html += '<td style="text-align: center;" ><a href="javascript:void(0);" onclick=Delete(' + item.productID + '); return false;>' +
+                            '<i class="fas fa-times" style="font-size: 20px;color: red;"></i></a></td>';
+                        html += '</tr>';
+                        $('#tblProds').html(html);
+                    })
+                   
+                },
+                error: function (e) { }
+            });
+    }
+
+
+    //form functions
+    function Add() {
+        $('#my-photo').show();
+        $('#btnAdd').show();
+        $('#btnUpdate').hide();
+            $.ajax({
+                url: '/Admin/AddProduct',
+                type: 'POST',
+                data: new FormData($("#ProductForm")[0]),
+                contentType: false,
+                processData: false,
+                success: function (data, xhr, status) {
+                    $("#myModal").modal("hide");
+                    Notiflix.Notify.Success('تم الاضافه');
+                    GetAllProducts()
+                    ResetForm();
+                },
+                error: function (e) {
+                    Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                    alert(e.responseText);
+                }
+            });
+        
+    };
+
+    function Delete(id) {
+        if (confirm("تاكيد الحذف")) {
+            $.ajax({
+                type: "POST",
+                dataType: false,
+                url: "/Admin/Delete",
+                data: { id: id },
+                success: function (data, xhr, status) {
+                    Notiflix.Notify.Success('تم الحذف');
+                    GetAllProducts();
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                    Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                }
+            });
+        }
+    }
+
+    function Edit(id) {     
+        $('#my-photo').show();
+        $('#btnAdd').hide();
+        $('#btnUpdate').show();
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/Shop/GetProductByID?id=" + id,
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    $('#prodName').val(result.prodName);
+                    $('#prodDescription').val(result.prodDescription);
+                    $('#price').val(result.price);
+                    $('#discount').val(result.discount);
+                    $('#inStock').val(result.inStock);
+                    if (result.isFeature) {
+                        $('#isFeature').val('true');
+
+                    } else {
+                        $('#isFeature').val('false');
+                    }
+                    $('#category').val(result.categoryID);
+                    $('#my-photo').attr('src', '/Images/Products/' + result.img);
+                    $('#hdnProdID').val(result.productID);
+                   
+                })
+            }
+
+        })
+    }
+
+    function Update() {
+        var id = $('#hdnProdID').val();         
+        $.ajax({
+            url: '/Admin/UpdateProduct?id=' +id,
+            type: 'POST',
+            data: new FormData($("#ProductForm")[0]),
+            contentType: false,
+            processData: false,
+            success: function (data, xhr, status) {
+                $("#myModal").modal("hide");
+                Notiflix.Notify.Success('تم التعديل');
+                GetAllProducts();
+                ResetForm();
+            },
+            error: function (e) {
+                Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                alert(e.responseText);
+            }
+        });
+        
+    }
+
+    function ResetForm() {
+        $('.pp').val('');
+        $('#category').val(0);
+        $('#my-photo').hide();
+    }
+
+    function preview() {
+        $('#my-photo').attr('src', URL.createObjectURL(event.target.files[0]));
+        $('#my-photo').show();
+    }
+    
+</script>

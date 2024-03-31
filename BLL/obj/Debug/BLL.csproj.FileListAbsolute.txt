@@ -1,0 +1,11 @@
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\bin\Debug\BLL.dll
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\bin\Debug\BLL.pdb
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\obj\Debug\BLL.dll
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\obj\Debug\BLL.pdb
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\bin\Debug\BLL.dll.config
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\bin\Debug\EntityFramework.dll
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\bin\Debug\EntityFramework.xml
+C:\Users\DELL\source\repos\E-Ecommerce\BLL\bin\Debug\EntityFramework.SqlServer.xml

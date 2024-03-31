@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "الطلبات";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link href="~/assets/css/orders.css" rel="stylesheet" />
+<section class="orders-section">
+    <div class="container">
+        <div class="content">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col"> رقم الاوردر</th>
+                        <th scope="col">العنوان</th>
+                        <th scope="col">السعر</th>
+                        <th scope="col">رقم الهاتف</th>
+                        <th scope="col">الحالة</th>
+                        <th scope="col">التفاصيل</th>
+                        <th scope="col">الشحن</th>
+                        <th scope="col">التوصيل</th>
+                        <th scope="col">حذف</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+    $(document).ready(function () {
+        GetAllOreders();
+
+    });
+
+    function GetAllOreders() {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/Orders/GetAllOreders",
+            success: function (result) {
+                var html = '';
+                var i = 1;
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + i + '</td>';
+                    html += '<td >' + item.orderID + '</td>';
+                    html += '<td >' + item.shippingAddress + '</td>';
+                    html += '<td >' + item.totalPrice + ' جنية' + '</td>';
+                    html += '<td >' + item.orderPhone + '</td>';
+                    if (item.IsDelivered) {
+                        html += '<td >' + 'تم التوصيل' + '</td>';
+                    }
+                    else if (item.status == null) {
+                        html += '<td >' + 'قيد الانتظار' + '</td>';
+                    }
+
+                    else if (item.status) {
+                        html += '<td >' + 'جاري الشحن' + '</td>';
+                    }
+                    else if (item.status == false) {
+                        html += '<td >' + 'تم الالغاء' + '</td>';
+                    }
+                   
+                    html += '<td style="text-align: right;" ><a href="/Orders/OrderDetails?orderID=' + item.orderID + '"> التفاصيل</a></td>';
+
+                    html += '<td style="text-align: right;" ><a href="javascript:void(0);" onclick=Shipping(' + item.orderID + '); return false;> الموافقة</a></td>';
+
+                    html += '<td style="text-align: center;" ><a href="javascript:void(0);" onclick=Delivered(' + item.orderID + '); return false;>' +
+                        '<i class="fas fa-check" style="font-size: 20px;color: green;"></i></a></td>';
+
+                    html += '<td style="text-align: center;" ><a href="javascript:void(0);" onclick=Delete(' + item.orderID + '); return false;>' +
+                        '<i class="fas fa-times" style="font-size: 20px;color: red;"></i></a></td>';
+                    html += '</tr>';
+                    i++;
+                    $('.tbody').html(html);
+                })
+
+            },
+            error: function (e) { }
+        });
+    }
+
+    function Shipping(orderID) {
+      $.ajax({
+                type: "POST",
+                dataType: false,
+                url: "/Orders/ConfirmShipping",
+                data: { orderID: orderID },
+                success: function (data, xhr, status) {
+                    GetAllOreders();
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                    Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                }
+            });
+        
+    }
+
+    function Delivered(orderID) {
+        $.ajax({
+            type: "POST",
+            dataType: false,
+            url: "/Orders/ConfirmDelivered",
+            data: { orderID: orderID },
+            success: function (data, xhr, status) {
+                GetAllOreders();
+            },
+            error: function (e) {
+                alert(e.responseText);
+                Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+            }
+        });
+
+    }
+
+    function Delete(orderID) {
+        if (confirm("تاكيد الحذف")) {
+            $.ajax({
+                type: "POST",
+                dataType: false,
+                url: "/Orders/DeleteOrder",
+                data: { orderID: orderID },
+                success: function (data, xhr, status) {
+                    Notiflix.Notify.Success('تم الحذف');
+                    GetAllOreders();
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                    Notiflix.Notify.Failure('حدث خطا ما يرجي اعاده المحاوله');
+                }
+            });
+        }
+    }
+</script>

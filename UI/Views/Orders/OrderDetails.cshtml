@@ -1,0 +1,57 @@
+﻿@model List<BLL.OrderDetailsVM>
+@{
+    ViewBag.Title = "الطلبات";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<link href="~/assets/css/orders.css" rel="stylesheet" />
+<section class="orders-section">
+    <div class="container">
+        
+        <div class="content">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col"> اسم المنتج</th>
+                        <th scope="col">السعر</th>
+                        <th scope="col">الكمية</th>
+                        <th scope="col">السعر الكلي</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody">
+                    
+                    @{
+                        int counter = 1;
+                        foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>@counter</td>
+                                <td>@item.productName</td>
+                                <td>@item.price</td>
+                                <td>@item.quntity</td>
+                                <td>@item.total جنيه</td>
+                            </tr>
+                            counter++;
+                           
+                        }
+                    }
+                    
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+    $(document).ready(function () {
+       
+
+    });
+</script>

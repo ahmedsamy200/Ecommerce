@@ -1,0 +1,139 @@
+﻿ 
+@{
+    ViewBag.Title = "اتمام الشراء";
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+}
+
+<link href="~/assets/css/profile.css" rel="stylesheet" />
+
+<style>
+    .user-details input {
+        background: rgb(169 162 162 / 4%) !important;
+    }
+    .user-details p {
+        margin-top: 6px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+</style>
+<section class="checkout-section" style="margin-top:90px">
+       <div class="container">
+           <div class="row" style="padding:20px">
+               <div class="col-md-6" style="box-shadow: 0 0 12px 0 rgb(0 0 0 / 12%);margin:0 auto">
+                   <div class="col-12 left-side text-center" style="padding:10px">
+                       <div class="left-side-content" style="padding-bottom: 7px;">
+                           <div class="right" style="margin-top: 20px;">
+                               <a href="#">
+                                   <span>إتمام عملية الشراء</span>
+                               </a>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row user-details">
+
+                       <div class="col-md-12">
+                           <label>الهاتف</label>
+                           <input  type="text" class="form-control txtPhone" />
+                           <p style="color: rgb(255, 51, 0);" id="invalidPhone">يجب ادخال رقم الهاتف ! </p>
+
+                       </div>
+                       <div class="col-md-12">
+                           <label>البلد</label>
+                           <input  type="text" class="form-control txtCountry" />
+                           <p style="color: rgb(255, 51, 0);" id="invalidCountry">يجب ادخال اسم البلد ! </p>
+
+                       </div>
+                       <div class=" col-md-12">
+                           <label>المدينه</label>
+                           <input  type="text" class="form-control txtCity" />
+                           <p style="color: rgb(255, 51, 0);" id="invalidCity">يجب ادخال اسم المدينه ! </p>
+
+                       </div>
+                       <div class="col-md-12">
+                           <label>المنطقه</label>
+                           <input  type="text" class="form-control txtState" />
+                           <p style="color: rgb(255, 51, 0);" id="invalidState">يجب ادخال اسم المنطقه ! </p>
+
+                       </div>
+
+                   </div>
+
+                   <div class="divBtn" >
+                       <button class="btn btn-success btnComplete" style="margin-top:15px;margin-bottom:15px;width:100%;height:42px">اتمام الشحن</button>
+
+                   </div>
+               </div>
+           </div>
+       </div> 
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        $('#invalidPhone').hide();
+        $('#invalidCountry').hide();
+        $('#invalidCity').hide();
+        $('#invalidState').hide();
+
+        $('.btnComplete').click(function () {
+            $('#invalidPhone').hide();
+            $('#invalidCountry').hide();
+            $('#invalidCity').hide();
+            $('#invalidState').hide();
+            var phone = $('.txtPhone').val();
+            var country = $('.txtCountry').val();
+            var city = $('.txtCity').val();
+            var state = $('.txtState').val();
+            if (phone == null || phone == '')
+            {
+                $('#invalidPhone').slideDown();
+            }
+            else if (country == null || country == '')
+            {
+                $('#invalidCountry').slideDown();
+            }
+            else if (city == null || city == '')
+            {
+                $('#invalidCity').slideDown();
+            }
+            else if (state == null || state == '')
+            {
+                $('#invalidState').slideDown();
+            }
+            else {
+                $('#invalidPhone').hide();
+                $('#invalidCountry').hide();
+                $('#invalidCity').hide();
+                $('#invalidState').hide();
+                $.ajax({
+                    url: "/Account/CheckOutProcess?orderPhone=" + phone +
+                    "&IsDelivered=" + false +
+                    "&shippingCountry=" + country +
+                    "&shippingCity=" + city +
+                    "&shippingState=" + state,
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+
+                        if (result == "Success") {
+                            Notiflix.Notify.Success('تم طلب الاوردر بنجاح');
+                            window.location.href = "/Account/Orders";
+                            $('.txtPhone').val('');
+                            $('.txtCountry').val('');
+                            $('.txtCity').val('');
+                            $('.txtState').val('');
+                            $('.cart-count').text(0);
+                        }
+                        else {
+                            Notiflix.Notify.Failure('حدث خطا ما');
+                        }
+                    }
+                })
+            }
+         
+        })
+    })
+
+
+</script>
