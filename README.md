@@ -1,6 +1,7 @@
 # 🚀 Ecommerce
 User-friendly ecommerce platform that allow customers to browse and purchase products online with the following features:
 
+**preview:** http://e-commerce.somee.com
 # 🛠️ Features
 
 ● Full featured shopping cart
